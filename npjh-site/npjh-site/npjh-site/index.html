@@ -60,7 +60,7 @@
 </head>
 <body>
 <main>
-  <div class="announcement" id="gold-ticker">Celebrating fine jewellery since 1994</div>
+  <div class="announcement">Celebrating fine jewellery since 1994</div>
 
   <header class="site-header">
     <a class="brand" href="#top" aria-label="Nu Punjab Jewellery House home">
@@ -71,7 +71,6 @@
       <a href="#custom">Custom Jewellery</a>
       <a href="#heritage">Our Heritage</a>
       <a href="#visit">Visit Us</a>
-      <a href="#appointment">Book Appointment</a>
       <a class="nav-cta" href="#enquire">Enquire</a>
     </nav>
     <button class="menu-button" id="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle menu">
@@ -131,7 +130,7 @@
         </div>
       </article>
       <article class="collection-card">
-        <img class="card-image" src="images/diamond-earring.png" alt="Emerald-cut diamond drop earring with floral cluster top, worn against a dark background">
+        <img class="card-image" src="images/diamond-earring.png" alt="Emerald-cut diamond statement earring worn against a dark background">
         <div class="card-copy">
           <span>02</span>
           <div>
@@ -142,7 +141,7 @@
         </div>
       </article>
       <article class="collection-card">
-        <img class="card-image" src="images/gold-jewellery.png" alt="Ornate 22K gold bridal necklace with intricate floral filigree work">
+        <img class="card-image" src="images/gold-jewellery.png" alt="Ornate Indian gold bridal necklace with matching chandelier earrings">
         <div class="card-copy">
           <span>03</span>
           <div>
@@ -157,25 +156,6 @@
       <strong>BIS hallmarked gold jewellery</strong>
       <span>Diamond certification details provided wherever applicable.</span>
     </div>
-  </section>
-
-  <section class="instagram" id="instagram">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">From our jewellery counter</p>
-        <h2>Follow the sparkle.</h2>
-      </div>
-      <p>Discover new arrivals, styling inspiration and pieces our clients are loving—straight from Instagram.</p>
-    </div>
-    <div class="instagram-feed">
-      <script src="https://elfsightcdn.com/platform.js" async></script>
-      <div class="elfsight-app-d2ec5c91-73b5-4d11-b5ee-3f505b7df6fd" data-elfsight-app-lazy></div>
-    </div>
-    <a class="instagram-link" href="https://www.instagram.com/nupunjabjewelleryhouse/" target="_blank" rel="noreferrer" aria-label="Visit Nu Punjab Jewellery House on Instagram">
-      <span class="instagram-icon">◎</span>
-      <span><small>Instagram</small><strong>@nupunjabjewelleryhouse</strong></span>
-      <b>↗</b>
-    </a>
   </section>
 
   <section class="custom-jewellery" id="custom">
@@ -201,26 +181,6 @@
         <h3>Quality without compromise</h3>
         <p>Every detail is carefully considered and every piece is finished to the standards our family name has represented since 1994.</p>
       </article>
-    </div>
-  </section>
-
-  <section class="appointment" id="appointment">
-    <div class="appointment-card">
-      <p class="eyebrow">Bridal shopping? Skip the wait.</p>
-      <h2>Book a private appointment</h2>
-      <p>Reserve a showroom slot in advance—especially handy during wedding season, when walk-in waits run long.</p>
-      <form class="appointment-form" id="appointment-form">
-        <input type="text" name="name" placeholder="Your name" aria-label="Your name" required>
-        <input type="date" name="date" aria-label="Preferred date" required>
-        <select name="occasion" aria-label="What are you shopping for?">
-          <option value="Bridal jewellery">Bridal jewellery</option>
-          <option value="Engagement jewellery">Engagement jewellery</option>
-          <option value="Custom design">Custom design</option>
-          <option value="General visit">General visit</option>
-        </select>
-        <button type="submit" class="button button-gold">Request on WhatsApp</button>
-      </form>
-      <p class="appointment-note">Or call us directly at <a href="tel:+919818208000">+91 98182 08000</a></p>
     </div>
   </section>
 
@@ -257,6 +217,19 @@
     <div class="visit-visual" aria-hidden="true"><span>NP</span></div>
   </section>
 
+  <section class="instagram">
+    <div>
+      <p class="eyebrow">From our jewellery counter</p>
+      <h2>Follow the sparkle.</h2>
+      <p>Discover new arrivals, styling inspiration and pieces our clients are loving.</p>
+    </div>
+    <a class="instagram-link" href="https://www.instagram.com/nupunjabjewelleryhouse/" target="_blank" rel="noreferrer" aria-label="Visit Nu Punjab Jewellery House on Instagram">
+      <span class="instagram-icon">◎</span>
+      <span><small>Instagram</small><strong>@nupunjabjewelleryhouse</strong></span>
+      <b>↗</b>
+    </a>
+  </section>
+
   <footer>
     <div class="footer-top">
       <div class="footer-brand">
@@ -274,7 +247,6 @@
       <a href="https://www.instagram.com/nupunjabjewelleryhouse/" target="_blank" rel="noreferrer">Instagram · @nupunjabjewelleryhouse</a>
       <span>Established 1994 · New Delhi</span>
     </div>
-    <p class="rate-disclaimer">Gold rate shown is an indicative IBJA-based retail rate (base rate + 3% GST); final billing includes making charges and applicable wastage.</p>
   </footer>
 </main>
 
@@ -290,39 +262,6 @@
       nav.classList.remove('open');
       menuBtn.setAttribute('aria-expanded', 'false');
     });
-  });
-
-  (function () {
-    const ticker = document.getElementById('gold-ticker');
-    if (!ticker) return;
-    fetch('/.netlify/functions/gold-rate?nocache=' + Date.now())
-      .then((res) => res.json())
-      .then((data) => {
-        const rates = data && data.rates && data.rates.gold_rates;
-        const silver = data && data.rates && data.rates.silver_rates;
-        if (!rates || !rates.gold_999 || !rates.gold_916) return;
-        const GST = 1.03; // IBJA publishes a base rate; retail adds 3% GST
-        const fmt = (n) => Math.round(n).toLocaleString('en-IN');
-        let text = `Today's Gold Rate (Retail) — 24K ₹${fmt(rates.gold_999 * GST)}/g · 22K ₹${fmt(rates.gold_916 * GST)}/g`;
-        if (silver && silver.silver_999) {
-          text += ` · Silver ₹${fmt(silver.silver_999 * GST)}/g`;
-        }
-        ticker.textContent = text;
-      })
-      .catch(() => {});
-  })();
-
-  const appointmentForm = document.getElementById('appointment-form');
-  appointmentForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = appointmentForm.name.value.trim();
-    const rawDate = appointmentForm.date.value;
-    const occasion = appointmentForm.occasion.value;
-    const niceDate = rawDate
-      ? new Date(rawDate + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
-      : 'Flexible';
-    const message = `Hello Nu Punjab Jewellery House, I would like to book a private appointment.\nName: ${name}\nPreferred date: ${niceDate}\nInterested in: ${occasion}`;
-    window.open(`https://wa.me/919818208000?text=${encodeURIComponent(message)}`, '_blank');
   });
 </script>
 </body>
