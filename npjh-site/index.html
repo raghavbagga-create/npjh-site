@@ -295,7 +295,7 @@
       (function () {
             const ticker = document.getElementById('gold-ticker');
             if (!ticker) return;
-            fetch('/.netlify/functions/gold-rate?nocache=' + Date.now())
+            fetch('/.netlify/functions/gold-rate')
               .then((res) => res.json())
               .then((data) => {
                         const rates = data && data.rates && data.rates.gold_rates;
