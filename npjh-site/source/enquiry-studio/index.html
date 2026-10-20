@@ -70,6 +70,10 @@
                 <fieldset class="choice-group" id="occasion-group"><legend>What’s the occasion? <span class="required-note">Choose one</span></legend><p class="field-help">Everyday moments deserve something beautiful, too.</p><div class="pills occasion-pills" id="occasion-options"></div></fieldset>
                 <div class="field-row">
                   <div class="field"><label for="customer-name">Your name <span class="required-star">*</span></label><input id="customer-name" name="customerName" autocomplete="name" maxlength="80" placeholder="How may we address you?" required></div>
+                  <div class="field"><label for="customer-mobile">Mobile number <span class="required-star">*</span></label><input id="customer-mobile" name="customerMobile" type="tel" autocomplete="tel" inputmode="tel" maxlength="24" placeholder="+91 98123 45678" required aria-describedby="mobile-help"><span class="field-help" id="mobile-help">Include your country code if outside India.</span></div>
+                </div>
+                <div class="field-row">
+                  <div class="field"><label for="customer-email">Email address <span class="optional">Optional</span></label><input id="customer-email" name="customerEmail" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com"></div>
                   <div class="field"><label for="budget">Approximate budget <span class="optional">Optional</span></label><select id="budget" name="budget"><option value="">Let’s discuss</option><option>Under ₹50,000</option><option>₹50,000–₹1 lakh</option><option>₹1–2 lakh</option><option>₹2–5 lakh</option><option>₹5–10 lakh</option><option>Above ₹10 lakh</option></select></div>
                 </div>
                 <div class="field-row">
@@ -85,8 +89,13 @@
                 <div class="message-heading"><label for="message-preview">Your WhatsApp message</label><button type="button" class="text-link" id="edit-details">Edit details ↗</button></div>
                 <textarea id="message-preview" rows="13" readonly aria-describedby="message-help" spellcheck="false"></textarea>
                 <p class="field-help" id="message-help">Your selections are included exactly as shown. Edit your details to make a change.</p>
-                <div class="whatsapp-actions"><a id="whatsapp-link" class="primary whatsapp" target="_blank" rel="noopener noreferrer" href="#">Open WhatsApp draft <span aria-hidden="true">↗</span></a><button type="button" class="secondary" id="copy-message">Copy message <span aria-hidden="true">⧉</span></button></div>
-                <p class="send-note">Nothing is sent automatically. Review the draft in WhatsApp and tap Send when you’re ready.</p>
+                <div class="contact-consent"><input id="contact-consent" name="consent" type="checkbox" value="yes" aria-describedby="privacy-note"><label for="contact-consent">I agree to Nu Punjab Jewellery House saving my contact details and jewellery preferences, and contacting me about this enquiry.</label></div>
+                <p class="field-help" id="privacy-note">Saved only when you select the button below. Our team uses these details to respond to your enquiry. To request correction or deletion, call <a href="tel:+919818208000">+91 98182 08000</a>. Opening WhatsApp shares your draft with WhatsApp; tap Send there to message us.</p>
+                <div class="enquiry-trap" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+                <button type="button" id="save-enquiry" class="primary save-enquiry">Save enquiry &amp; prepare WhatsApp <span aria-hidden="true">→</span></button>
+                <p id="save-status" class="save-status" role="status" aria-live="polite"></p>
+                <div class="whatsapp-actions" id="whatsapp-actions" hidden><a id="whatsapp-link" class="primary whatsapp" target="_blank" rel="noopener noreferrer" href="#">Open WhatsApp draft <span aria-hidden="true">↗</span></a><button type="button" class="secondary" id="copy-message">Copy message <span aria-hidden="true">⧉</span></button></div>
+                <p class="send-note">Saving records your enquiry with us. No WhatsApp message is sent automatically.</p>
                 <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
                 <div class="review-footer"><span>TO NU PUNJAB JEWELLERY HOUSE<br><strong>+91 98182 08000</strong></span><button type="button" class="back" data-back="2">← Back to details</button></div>
               </div>

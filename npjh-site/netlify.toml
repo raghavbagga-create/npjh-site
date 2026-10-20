@@ -13,6 +13,12 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/api/enquiries"
+  to = "/.netlify/functions/save-enquiry"
+  status = 200
+  force = true
+
 [[headers]]
   for = "/assets/*"
   [headers.values]

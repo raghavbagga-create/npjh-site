@@ -26,3 +26,4 @@ const content=renderToString(React.createElement(Home)),head=await readFile('sou
 await writeFile('dist/index.html',`<!doctype html><html lang="en"><head>${head}<link rel="stylesheet" href="/assets/${cssName}"></head><body><div id="app">${content}</div><script type="module" src="/assets/${jsName}"></script></body></html>`);
 await build({entryPoints:['source/functions/site-gold-rates.ts'],outfile:'netlify/functions/site-gold-rates.js',bundle:true,platform:'node',format:'cjs',external:['./gold-rate.js'],target:'node22',tsconfig:'tsconfig.json'});
 console.log(JSON.stringify({status:'built',html:'dist/index.html',css:'dist/assets/'+cssName,js:'dist/assets/'+jsName}));
+await build({entryPoints:['source/functions/save-enquiry.mjs'],outfile:'netlify/functions/save-enquiry.mjs',bundle:true,platform:'node',format:'esm',target:'node22'});

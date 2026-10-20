@@ -4,6 +4,17 @@ export function mountEnquiryStudio(root, prefix = '') {
   const $ = (id) => root.querySelector(`#${prefix}${id}`);
   const form = $('enquiry-form');
   let activeStage = 1;
+  function newSubmissionId(){
+    if(crypto.randomUUID)return crypto.randomUUID();
+    const bytes=crypto.getRandomValues(new Uint8Array(16));bytes[6]=(bytes[6]&15)|64;bytes[8]=(bytes[8]&63)|128;
+    const hex=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
+    return `${hex.slice(0,8)}-${hex.slice(8,12)}-${hex.slice(12,16)}-${hex.slice(16,20)}-${hex.slice(20)}`;
+  }
+  let submissionId = newSubmissionId();
+  let savedReference = '';
+  let saving = false;
+  const saveButton = $('save-enquiry');
+  const saveStatus = $('save-status');
   const svg = (inner) => `<svg viewBox="0 0 72 64" aria-hidden="true">${inner}</svg>`;
   const diamond = '<path d="M26 14h20l7 9-17 18-17-18zM19 23h34M26 14l4 9 6 18 6-18 4-9M30 23l6-9 6 9"/>';
   const icons = {
@@ -44,6 +55,9 @@ export function mountEnquiryStudio(root, prefix = '') {
   function metalDescription(){const metal=value('metal');const purity=value('purity');return metal+(metal.toLowerCase().includes('gold')&&purity?` · ${purity==='Please guide me'?'purity to discuss':purity}`:'');}
   function getMessage(){
     const lines=[`Hello Nu Punjab Jewellery House,`,``, `My name is ${value('customerName')}. I would like to discuss a jewellery enquiry.`,``, `Jewellery: ${value('type')}`,`Metal: ${metalDescription()}`,`Diamond preference: ${value('diamond')}`,`Occasion: ${value('occasion')}`];
+    lines.push(`Mobile: ${value('customerMobile')}`);
+    if(value('customerEmail'))lines.push(`Email: ${value('customerEmail')}`);
+    if(savedReference)lines.push(`Enquiry reference: ${savedReference}`);
     if(value('budget'))lines.push(`Approximate budget: ${value('budget')}`);
     if(value('neededBy'))lines.push(`Preferred date: ${formatDate(value('neededBy'))}`);
     if(value('inspiration'))lines.push(`Inspiration: ${value('inspiration')}`);
@@ -97,6 +111,9 @@ export function mountEnquiryStudio(root, prefix = '') {
   function validateDetails(){
     if(!value('occasion'))return showError('Please choose an occasion for your piece.',form.querySelector('input[name="occasion"]'));
     if(!value('customerName'))return showError('Please enter your name so we can make the conversation personal.',$('customer-name'));
+    const mobile=value('customerMobile');
+    if(!/^\+?[\d\s().-]+$/.test(mobile)||!/^\+?\d{8,15}$/.test(mobile.replace(/[\s().-]/g,'')))return showError('Please enter a mobile number with 8 to 15 digits.',$('customer-mobile'));
+    if(value('customerEmail')&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value('customerEmail')))return showError('Please enter a valid email address, or leave it empty.',$('customer-email'));
     const date=value('neededBy');
     if(date&&(!/^\d{4}-\d{2}-\d{2}$/.test(date)||date<today()))return showError('Please choose today or a future date.',$('needed-by'));
     const inspiration=value('inspiration');
@@ -104,27 +121,61 @@ export function mountEnquiryStudio(root, prefix = '') {
     return true;
   }
   function goTo(stage){
+    if(saving)return;
     clearError();
     if(stage>1&&!validatePiece())return;
     if(stage===3){if(activeStage!==2)displayStage(2,false);if(!validateDetails())return;}
     displayStage(stage);
   }
   on(form,'submit',e=>{e.preventDefault();goTo(activeStage===1?2:3);});
-  on(form,'input',()=>{clearError();updateSummary();});
-  on(form,'change',()=>{clearError();updateSummary();});
+  function detailsChanged(event){
+    clearError();
+    if(!['consent','website'].includes(event.target.name)){
+      submissionId=newSubmissionId();savedReference='';saveStatus.textContent='';saveStatus.removeAttribute('data-state');
+      saveButton.disabled=false;saveButton.textContent='Save enquiry & prepare WhatsApp →';$('whatsapp-actions').hidden=true;
+    }
+    updateSummary();
+  }
+  on(form,'input',detailsChanged);
+  on(form,'change',detailsChanged);
   on($('to-details'),'click',()=>goTo(2));
   on($('to-review'),'click',()=>goTo(3));
   root.querySelectorAll('[data-step]').forEach(el=>on(el,'click',()=>goTo(Number(el.dataset.step))));
   root.querySelectorAll('[data-back]').forEach(el=>on(el,'click',()=>goTo(Number(el.dataset.back))));
   on($('edit-details'),'click',()=>goTo(2));
+  on(saveButton,'click',async()=>{
+    if(saving||savedReference)return;
+    clearError();
+    if(!validatePiece())return;
+    if(!validateDetails()){displayStage(2,false);return;}
+    if(!$('contact-consent').checked)return showError('Please agree to saving your details before submitting this enquiry.',$('contact-consent'));
+    const payload={submissionId,consent:true,consentVersion:'enquiry-contact-2026-10-21',website:value('website')};
+    for(const name of ['customerName','customerMobile','customerEmail','type','metal','purity','diamond','occasion','budget','neededBy','inspiration','notes'])payload[name]=value(name);
+    saving=true;saveButton.disabled=true;saveButton.textContent='Saving your enquiry…';saveStatus.textContent='Please wait while we save your enquiry.';saveStatus.removeAttribute('data-state');form.setAttribute('aria-busy','true');
+    try{
+      const response=await fetch('/api/enquiries',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:AbortSignal.any([lifecycle.signal,AbortSignal.timeout(20000)])});
+      let result;
+      try{result=await response.json();}catch{throw new Error('We could not connect to enquiry storage. Please retry.');}
+      if(!response.ok||!result.saved||result.reference!==submissionId)throw new Error(response.status===429?'Too many attempts. Please wait a minute and retry.':result.error||'We could not confirm your enquiry was saved. Please retry.');
+      savedReference=result.reference;
+      saveStatus.textContent=`Thank you. Your enquiry is saved. Reference: ${savedReference}. You can now open your WhatsApp draft whenever you’re ready.`;saveStatus.dataset.state='success';saveButton.textContent='Enquiry saved ✓';
+    }catch(error){
+      if(lifecycle.signal.aborted)return;
+      saveStatus.textContent=(error.name==='TimeoutError'?'Saving took too long. Please retry to confirm; retries will not create a duplicate.':error.message==='Failed to fetch'?'We could not connect to save your enquiry. Please retry.':error.message)+' You can also use the WhatsApp draft below; sending it does not confirm website storage.';
+      saveStatus.dataset.state='error';saveButton.disabled=false;saveButton.textContent='Retry saving enquiry →';
+    }finally{
+      saving=false;form.removeAttribute('aria-busy');
+      if(!lifecycle.signal.aborted){$('whatsapp-actions').hidden=false;updateSummary();}
+    }
+  });
   on($('copy-message'),'click',async()=>{
     try{await navigator.clipboard.writeText(getMessage());$('copy-status').textContent='Message copied. You can paste it into WhatsApp.';}
     catch{$('message-preview').focus();$('message-preview').select();$('copy-status').textContent='Select and copy the highlighted message using your device’s Copy command.';}
   });
   on($('whatsapp-link'),'click',()=>{$('copy-status').textContent='Your draft will open in WhatsApp. Tap Send there when you’re ready.';});
-  on($('reset-enquiry'),'click',()=>$('reset-dialog').showModal());
+  on($('reset-enquiry'),'click',()=>{if(!saving)$('reset-dialog').showModal();});
   on($('cancel-reset'),'click',()=>$('reset-dialog').close());
-  on($('confirm-reset'),'click',()=>{form.reset();clearError();$('message-preview').value='';$('whatsapp-link').href='#';$('reset-dialog').close();displayStage(1);});
+  on($('confirm-reset'),'click',()=>{form.reset();submissionId=newSubmissionId();savedReference='';saveStatus.textContent='';saveStatus.removeAttribute('data-state');saveButton.disabled=false;saveButton.textContent='Save enquiry & prepare WhatsApp →';$('whatsapp-actions').hidden=true;clearError();$('message-preview').value='';$('whatsapp-link').href='#';$('reset-dialog').close();displayStage(1);});
   $('needed-by').min=today();
   if ($('year')) $('year').textContent=new Date().getFullYear();
   displayStage(1,false);
