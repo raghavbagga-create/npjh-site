@@ -1,0 +1,26 @@
+
+.home-studio{--ivory:#fbf8f2;--paper:#fffdf9;--ink:#251b1d;--muted:#72605f;--gold:#926d37;--line:#d8cbb9;--green:#3b0718;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Manrope',Arial,sans-serif;scroll-margin-top:96px}
+.home-studio .studio-section{background:#f5eee3;padding:70px 0 35px}
+.home-studio .section-heading h2{font-size:clamp(2.4rem,4.5vw,4.4rem);line-height:1.08;color:#3b0718}
+.home-studio p{margin-bottom:1em}
+.home-studio .section-heading>p{font-size:14px;margin:0;max-width:380px}
+.home-studio .field{display:block}
+.home-studio .summary{top:120px;background:#efe4d2;border-color:#ddcbb2}
+.home-studio .summary-bottom p,.home-studio .studio-note p{margin-bottom:0}
+.home-studio .primary:hover{background:#5c1930}
+.home-studio .reset-enquiry{padding-bottom:30px}
+.home-studio .steps{scroll-margin-top:12px}
+.home-studio dialog{position:fixed;inset:0;margin:auto;max-height:calc(100dvh - 40px)}
+.home-studio .review-footer{padding-bottom:0}
+.home-studio .studio-note{margin-bottom:26px}
+@media(max-width:800px){.home-studio .summary{position:static}.home-studio .section-heading>p{font-size:12px}.home-studio{scroll-margin-top:82px}}
+@media(max-width:560px){.home-studio .studio-section{padding-top:48px}.home-studio .section-heading h2{font-size:40px}.home-studio .section-heading>p{font-size:12px;margin-top:14px}.home-studio .steps{padding-top:14px}.home-studio .field input,.home-studio .field textarea{font-size:16px}.home-studio .summary-description{margin-bottom:24px}.home-studio .reset-enquiry{font-size:11px}.home-studio .stage-actions .primary{font-size:11px}}
+.home-studio .summary-icon svg{margin-inline:auto}
+.home-studio legend{font-size:14px}
+.home-studio .piece-card span,.home-studio .stone-card strong{font-size:12px}
+.home-studio .field label{font-size:13px}
+.home-studio .summary-list>div{font-size:12px}
+.home-studio .summary dt{font-size:11px}
+.home-studio #studio-message-preview{font-size:13px}
+.home-studio .step{font-size:11px}
+@media(max-width:560px){.home-studio .metal-card,.home-studio .pill{font-size:11px}.home-studio .stone-card small,.home-studio .review-title>p:last-child{font-size:10px}.home-studio .field-help,.home-studio .send-note{font-size:11px}}

@@ -18,4 +18,8 @@ The existing gold-rate endpoint remains available. `/api/gold-rates` is rewritte
 
 ## Enquiry studio
 
-The public studio is built from `source/enquiry-studio/` to `/enquiry-studio/`. The homepage navigation, custom-jewellery calls to action and footer link to it. Its ticker reads the existing same-origin `/api/gold-rates` function; its Instagram carousel reuses the established Elfsight widget. It includes the site's existing Analytics measurement ID. Customers review all choices before opening a WhatsApp draft to +91 98182 08000; nothing is sent automatically.
+The studio is embedded in the homepage at `/#enquiry-studio`, with the standalone `/enquiry-studio/` page retained for existing links. The homepage navigation, custom-jewellery calls to action and footer scroll directly to the embedded studio. Its ticker reads the existing same-origin `/api/gold-rates` function; its Instagram carousel reuses the established Elfsight widget. It includes the site's existing Analytics measurement ID. Customers review all choices before opening a WhatsApp draft to +91 98182 08000; nothing is sent automatically.
+
+The complete studio is also rendered directly on the homepage at `/#enquiry-studio`. Its controls use a dedicated ID prefix and scoped styling so the collection and showroom form remains independent. Both the homepage and standalone page share `source/enquiry-studio/controller.js`; the build extracts the studio markup and scopes its styles for the homepage. The homepage includes only its existing single rate ticker and single Instagram feed.
+
+Verified the merged homepage at desktop and 320px widths: complete selection/review flow, encoded WhatsApp recipient and message, required-field errors, copy, reset confirmation, menu navigation, and independent collection enquiries. Confirmed selections survive parent navigation/filter updates and IDs do not conflict.

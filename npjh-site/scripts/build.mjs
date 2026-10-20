@@ -1,4 +1,5 @@
 import {build} from 'esbuild';
+import {buildStudio} from './build-studio.mjs';
 import postcss from 'postcss';
 import tailwindcss from '@tailwindcss/postcss';
 import {readFile,writeFile,mkdir,copyFile} from 'node:fs/promises';
@@ -12,9 +13,11 @@ await mkdir('.build',{recursive:true});await mkdir('dist/assets',{recursive:true
 for(const name of ['hero-necklace.jpeg','gold-heirlooms.jpeg','diamond-earring.png','gold-jewellery.png','logo-mark.png','favicon.png'])await copyFile('images/'+name,'dist/images/'+name);
 for(const name of ['robots.txt','sitemap.xml'])await copyFile(name,'dist/'+name);
 await mkdir('dist/enquiry-studio',{recursive:true});
-for(const name of ['index.html','styles.css','app.js','integrations.js'])await copyFile('source/enquiry-studio/'+name,'dist/enquiry-studio/'+name);
+for(const name of ['index.html','styles.css','app.js','controller.js','integrations.js'])await copyFile('source/enquiry-studio/'+name,'dist/enquiry-studio/'+name);
+const studioCss=await buildStudio();
 const css=await postcss([tailwindcss({base:resolve('source')})]).process(await readFile('source/app/globals.css','utf8'),{from:resolve('source/app/globals.css'),map:false});
-const cssName=`jewellery-${hash(css.css)}.css`;await writeFile('dist/assets/'+cssName,css.css);
+const combinedCss=css.css+studioCss;
+const cssName=`jewellery-${hash(combinedCss)}.css`;await writeFile('dist/assets/'+cssName,combinedCss);
 const js=await build({entryPoints:['source/client.tsx'],bundle:true,write:false,format:'esm',platform:'browser',minify:true,jsx:'automatic',tsconfig:'tsconfig.json',target:['es2020'],define:{'process.env.NODE_ENV':'"production"'}});
 const jsBytes=js.outputFiles[0].contents,jsName=`jewellery-${hash(jsBytes)}.js`;await writeFile('dist/assets/'+jsName,jsBytes);
 await build({entryPoints:['source/app/page.tsx'],bundle:true,outfile:'.build/render.cjs',platform:'node',format:'cjs',packages:'external',jsx:'automatic',tsconfig:'tsconfig.json'});
