@@ -153,7 +153,7 @@ export function mountEnquiryStudio(root, prefix = '') {
     for(const name of ['customerName','customerMobile','customerEmail','type','metal','purity','diamond','occasion','budget','neededBy','inspiration','notes'])payload[name]=value(name);
     saving=true;saveButton.disabled=true;saveButton.textContent='Saving your enquiry…';saveStatus.textContent='Please wait while we save your enquiry.';saveStatus.removeAttribute('data-state');form.setAttribute('aria-busy','true');
     try{
-      const response=await fetch('/api/enquiries',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:AbortSignal.any([lifecycle.signal,AbortSignal.timeout(20000)])});
+      const response=await fetch('/.netlify/functions/save-enquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:AbortSignal.any([lifecycle.signal,AbortSignal.timeout(20000)])});
       let result;
       try{result=await response.json();}catch{throw new Error('We could not connect to enquiry storage. Please retry.');}
       if(!response.ok||!result.saved||result.reference!==submissionId)throw new Error(response.status===429?'Too many attempts. Please wait a minute and retry.':result.error||'We could not confirm your enquiry was saved. Please retry.');
