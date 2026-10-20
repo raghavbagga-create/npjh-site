@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f8f5ee">
+  <meta name="description" content="Make your jewellery personal with Nu Punjab Jewellery House. Choose your preferences, review your enquiry and prepare a message for WhatsApp.">
+  <title>Custom Jewellery Enquiry Studio | Nu Punjab Jewellery House</title>
+  <link rel="canonical" href="https://nupunjabjewelleryhouse.com/enquiry-studio/">
+  <meta property="og:title" content="Your Jewellery, Made Personal | Nu Punjab Jewellery House">
+  <meta property="og:description" content="Choose your jewellery preferences, review your enquiry and prepare a personal WhatsApp conversation with Nu Punjab Jewellery House.">
+  <meta property="og:url" content="https://nupunjabjewelleryhouse.com/enquiry-studio/">
+  <meta property="og:image" content="https://nupunjabjewelleryhouse.com/images/hero-necklace.jpeg">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="/images/logo-mark.png">
+  <link rel="stylesheet" href="/enquiry-studio/styles.css">
+  <script src="/enquiry-studio/app.js" defer></script>
+  <script src="/enquiry-studio/integrations.js" defer></script>
+<!-- Google Analytics (GA4) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-VGX7VRF6J2"></script> <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VGX7VRF6J2');</script>
+</head>
+<body>
+  <a class="skip" href="#studio">Skip to enquiry studio</a>
+  <section class="rate-ticker" aria-label="Gold and silver rates per gram"><div class="rate-ticker-inner"><div class="rate-ticker-heading"><span class="rate-dot" aria-hidden="true"></span><strong>GOLD RATES</strong><span id="rates-date"></span></div><div id="rates-content" class="rates-content" role="status" aria-live="polite">Loading latest rates…</div><button id="refresh-rates" class="rate-refresh" type="button" aria-label="Refresh gold rates">↻</button></div></section>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Nu Punjab Jewellery House home"><img src="/images/logo-mark.png" alt="" width="42" height="46"><span><strong>NU PUNJAB</strong><small>JEWELLERY HOUSE</small></span></a>
+    <div class="header-note">A family jeweller. A personal experience.</div>
+    <a class="text-link website-link" href="/">Back to our website <span aria-hidden="true">↗</span></a>
+  </header>
+  <main id="top">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> THE ENQUIRY STUDIO</p>
+        <h1 id="hero-title">Something beautiful.<br><em>Made personal.</em></h1>
+        <p class="hero-description">An occasion, an idea, a piece you’ve imagined.<br class="desktop-br"> Let’s give it a beautiful beginning.</p>
+        <a class="primary hero-cta" href="#studio">Begin your enquiry <span aria-hidden="true">↗</span></a>
+        <p class="hero-fine">A few thoughtful choices. A conversation that’s yours.</p>
+        <div class="heritage"><span class="heritage-number">4<sup>th</sup></span><span>GENERATION FAMILY JEWELLERS<br><strong>With care, since 1994.</strong></span></div>
+      </div>
+      <div class="hero-visual">
+        <img class="hero-photo" src="/images/hero-necklace.jpeg" alt="Diamond and gold necklace from Nu Punjab Jewellery House, worn with a black outfit" width="850" height="1000" fetchpriority="high">
+        <div class="image-shade"></div>
+        <div class="image-label"><span>GOLD. DIAMONDS. YOUR STORY.</span><p>The art of<br><em>celebrating you.</em></p></div>
+        <span class="image-index" aria-hidden="true">NPJH / 01</span>
+      </div>
+    </section>
+    <div class="intro-rule wrap"><span>YOUR VISION, THOUGHTFULLY CRAFTED</span><span>RAJOURI GARDEN · NEW DELHI</span></div>
+    <section class="studio-section" id="studio" aria-labelledby="studio-title">
+      <div class="wrap">
+        <div class="section-heading"><div><p class="eyebrow">LET’S CREATE SOMETHING YOURS</p><h2 id="studio-title">It starts with <em>your idea.</em></h2></div><p>Choose what speaks to you.<br>We’ll help you with the finer details.</p></div>
+        <div class="studio-layout">
+          <div class="builder">
+            <nav class="steps" aria-label="Enquiry progress">
+              <button type="button" class="step active" data-step="1" aria-current="step"><span class="step-num">01</span><span>The piece</span></button>
+              <span class="step-line" aria-hidden="true"></span>
+              <button type="button" class="step" data-step="2"><span class="step-num">02</span><span>The details</span></button>
+              <span class="step-line" aria-hidden="true"></span>
+              <button type="button" class="step" data-step="3"><span class="step-num">03</span><span>Your enquiry</span></button>
+            </nav>
+            <noscript><p style="padding:24px">Please enable JavaScript to use the enquiry studio, or <a href="tel:+919818208000">call +91 98182 08000</a> for personal assistance.</p></noscript>
+            <form id="enquiry-form" novalidate>
+              <div id="form-error" class="form-error" role="alert" hidden></div>
+              <div class="stage" id="stage-1" data-stage="1">
+                <fieldset class="choice-group" id="type-group"><legend>What do you have in mind? <span class="required-note">Choose one</span></legend><p class="field-help">A little inspiration. A place to begin.</p><div class="piece-grid" id="type-options"></div></fieldset>
+                <fieldset class="choice-group" id="metal-group"><legend>Your preferred metal <span class="required-note">Choose one</span></legend><div class="metal-grid" id="metal-options"></div></fieldset>
+                <fieldset class="choice-group purity-group" id="purity-group" hidden><legend>Gold purity <span class="optional">Optional</span></legend><div class="pills" id="purity-options"></div><p class="field-help">We can guide you on the best purity for your design.</p></fieldset>
+                <fieldset class="choice-group" id="diamond-group"><legend>A touch of brilliance <span class="required-note">Choose one</span></legend><div class="stone-grid" id="diamond-options"></div><p class="field-help">Not certain? Choose “Guide me” and we’ll explore the options together.</p></fieldset>
+                <div class="stage-actions"><span class="subtle">Next, the personal touches.</span><button class="primary" type="button" id="to-details">The details <span aria-hidden="true">→</span></button></div>
+              </div>
+              <div class="stage" id="stage-2" data-stage="2" hidden>
+                <fieldset class="choice-group" id="occasion-group"><legend>What’s the occasion? <span class="required-note">Choose one</span></legend><p class="field-help">Everyday moments deserve something beautiful, too.</p><div class="pills occasion-pills" id="occasion-options"></div></fieldset>
+                <div class="field-row">
+                  <div class="field"><label for="customer-name">Your name <span class="required-star">*</span></label><input id="customer-name" name="customerName" autocomplete="name" maxlength="80" placeholder="How may we address you?" required></div>
+                  <div class="field"><label for="budget">Approximate budget <span class="optional">Optional</span></label><select id="budget" name="budget"><option value="">Let’s discuss</option><option>Under ₹50,000</option><option>₹50,000–₹1 lakh</option><option>₹1–2 lakh</option><option>₹2–5 lakh</option><option>₹5–10 lakh</option><option>Above ₹10 lakh</option></select></div>
+                </div>
+                <div class="field-row">
+                  <div class="field"><label for="needed-by">Preferred date <span class="optional">Optional</span></label><input id="needed-by" name="neededBy" type="date"><span class="field-help">Our team will confirm the time your piece needs.</span></div>
+                  <div class="field"><label for="inspiration">Inspiration link <span class="optional">Optional</span></label><input id="inspiration" name="inspiration" type="url" placeholder="https://…" maxlength="500"><span class="field-help">You can also share photos directly in WhatsApp.</span></div>
+                </div>
+                <div class="field"><label for="notes">Make it personal <span class="optional">Optional</span></label><textarea id="notes" name="notes" rows="5" maxlength="1000" placeholder="A design you love, preferred diamond shape, ring size, an engraving, or an heirloom you’d like to reimagine…"></textarea><div class="textarea-meta"><span>Tell us what would make this piece yours.</span><span id="notes-count">0 / 1000</span></div></div>
+                <div class="studio-note"><span aria-hidden="true">✧</span><p>Your preferences are a starting point. We’ll discuss the design, availability and quotation personally with you.</p></div>
+                <div class="stage-actions"><button class="back" type="button" data-back="1">← Back</button><button class="primary" type="button" id="to-review">Review my enquiry <span aria-hidden="true">→</span></button></div>
+              </div>
+              <div class="stage" id="stage-3" data-stage="3" hidden>
+                <div class="review-title"><span class="review-mark" aria-hidden="true">✧</span><p class="eyebrow">A BEAUTIFUL BEGINNING</p><h3>Your idea, <em>ready to share.</em></h3><p>Take a moment to review. We look forward to making it personal.</p></div>
+                <div class="message-heading"><label for="message-preview">Your WhatsApp message</label><button type="button" class="text-link" id="edit-details">Edit details ↗</button></div>
+                <textarea id="message-preview" rows="13" readonly aria-describedby="message-help" spellcheck="false"></textarea>
+                <p class="field-help" id="message-help">Your selections are included exactly as shown. Edit your details to make a change.</p>
+                <div class="whatsapp-actions"><a id="whatsapp-link" class="primary whatsapp" target="_blank" rel="noopener noreferrer" href="#">Open WhatsApp draft <span aria-hidden="true">↗</span></a><button type="button" class="secondary" id="copy-message">Copy message <span aria-hidden="true">⧉</span></button></div>
+                <p class="send-note">Nothing is sent automatically. Review the draft in WhatsApp and tap Send when you’re ready.</p>
+                <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+                <div class="review-footer"><span>TO NU PUNJAB JEWELLERY HOUSE<br><strong>+91 98182 08000</strong></span><button type="button" class="back" data-back="2">← Back to details</button></div>
+              </div>
+            </form>
+          </div>
+          <aside class="summary" aria-labelledby="summary-title">
+            <div class="summary-top"><span class="eyebrow">YOUR PERSONAL SELECTION</span><span class="sparkle" aria-hidden="true">✧</span></div>
+            <div id="summary-icon" class="summary-icon" aria-hidden="true"></div>
+            <h3 id="summary-title">A piece of <em>your story.</em></h3><p class="summary-description" id="summary-description">Your choices, beautifully brought together.</p>
+            <dl class="summary-list"><div><dt>The piece</dt><dd id="summary-type">Yet to be imagined</dd></div><div><dt>Metal</dt><dd id="summary-metal">Your choice</dd></div><div><dt>Diamonds</dt><dd id="summary-diamond">Your choice</dd></div><div><dt>Occasion</dt><dd id="summary-occasion">Your moment</dd></div><div id="summary-budget-row" hidden><dt>Budget</dt><dd id="summary-budget"></dd></div><div id="summary-date-row" hidden><dt>Preferred date</dt><dd id="summary-date"></dd></div></dl>
+            <div id="summary-notes-wrap" class="summary-notes" hidden><span>THE PERSONAL TOUCH</span><p id="summary-notes"></p></div>
+            <div class="summary-bottom"><span class="tiny-diamond" aria-hidden="true">◇</span><p>Thoughtful design.<br>Personal attention, always.</p></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+    <section class="instagram-section wrap" id="instagram" aria-labelledby="instagram-title">
+      <div class="section-heading"><div><p class="eyebrow">FROM OUR JEWELLERY COUNTER</p><h2 id="instagram-title">Follow <em>the sparkle.</em></h2></div><p>New arrivals, personal creations<br>and stories from our Instagram.</p></div>
+      <div class="instagram-widget-shell"><div id="instagram-status" class="instagram-status" role="status"><span class="instagram-symbol" aria-hidden="true">◎</span><p>Loading our jewellery stories…</p><a class="text-link" href="https://www.instagram.com/nupunjabjewelleryhouse/" target="_blank" rel="noopener noreferrer">Explore on Instagram ↗</a></div><div id="instagram-widget" class="elfsight-app-d2ec5c91-73b5-4d11-b5ee-3f505b7df6fd"></div></div>
+      <div class="instagram-footer"><span>GOLD. DIAMONDS. YOUR STORY.</span><a class="text-link" href="https://www.instagram.com/nupunjabjewelleryhouse/" target="_blank" rel="noopener noreferrer">@nupunjabjewelleryhouse <span aria-hidden="true">↗</span></a></div>
+    </section>
+    <section class="closing wrap"><div><p class="eyebrow">FROM OUR FAMILY TO YOURS</p><h2>Jewellery is personal.<br><em>So is our service.</em></h2></div><div class="closing-copy"><p>Now run by the fourth generation of our family, we carry the same craft and care forward with every piece.</p><a href="tel:+919818208000" class="text-link">Prefer a conversation? Call us <span aria-hidden="true">↗</span></a></div></section>
+  </main>
+  <footer><div class="wrap footer-main"><div><a class="brand footer-brand" href="#top"><span><strong>NU PUNJAB</strong><small>JEWELLERY HOUSE</small></span></a><p>Gold. Diamonds. Your story.</p></div><div><span class="eyebrow">VISIT OUR SHOWROOM</span><p>F-118, Main Market, Rajouri Garden<br>New Delhi 110027</p><a class="text-link" href="https://maps.app.goo.gl/VNbsMiJzc6GAscj59" target="_blank" rel="noopener noreferrer">Get directions ↗</a></div><div><span class="eyebrow">LET’S CONNECT</span><p>11 AM–8 PM · Closed Wednesday<br><a href="tel:+919818208000">+91 98182 08000</a></p><a class="text-link" href="https://www.instagram.com/nupunjabjewelleryhouse/" target="_blank" rel="noopener noreferrer">Instagram ↗</a></div></div><div class="wrap footer-bottom"><span>© <span id="year">2026</span> Nu Punjab Jewellery House</span><a href="/">nupunjabjewelleryhouse.com ↗</a></div></footer>
+  <dialog id="reset-dialog" aria-labelledby="reset-title"><h3 id="reset-title">Begin a fresh enquiry?</h3><p>This will clear your current selections and details.</p><div><button class="secondary" id="cancel-reset" type="button">Keep my enquiry</button><button class="primary" id="confirm-reset" type="button">Start fresh</button></div></dialog>
+  <button type="button" id="reset-enquiry" class="reset-enquiry">Start a fresh enquiry ↗</button>
+</body>
+</html>
