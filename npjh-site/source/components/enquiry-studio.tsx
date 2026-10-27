@@ -7,7 +7,7 @@ const content={__html:studioMarkup};
 function EnquiryStudio(){
  const root=useRef<HTMLDivElement>(null);
  useEffect(()=>root.current?mountEnquiryStudio(root.current,'studio-'):undefined,[]);
- return <div ref={root} id="enquiry-studio" className="home-studio" dangerouslySetInnerHTML={content}/>;
+ return <div ref={root} id="custom-enquiry-builder" className="home-studio" dangerouslySetInnerHTML={content}/>;
 }
 
 export default memo(EnquiryStudio);

@@ -7,7 +7,7 @@ const choices = {
   metal: ['Yellow gold', 'White gold', 'Rose gold', 'Platinum', 'Please guide me'],
   purity: ['', '14kt', '18kt', '22kt', 'Please guide me'],
   diamond: ['Natural diamonds', 'Lab-grown diamonds', 'No diamonds', 'Please guide me'],
-  occasion: ['Wedding / Bridal', 'Engagement', 'Anniversary', 'A gift', 'Everyday wear', 'Another occasion'],
+  occasion: ['Not decided yet', 'Wedding / Bridal', 'Engagement', 'Anniversary', 'A gift', 'Everyday wear', 'Another occasion'],
   budget: ['', 'Under ₹50,000', '₹50,000–₹1 lakh', '₹1–2 lakh', '₹2–5 lakh', '₹5–10 lakh', 'Above ₹10 lakh']
 };
 class InvalidEnquiry extends Error {}

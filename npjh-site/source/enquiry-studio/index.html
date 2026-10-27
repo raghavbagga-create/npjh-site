@@ -46,69 +46,73 @@
     <div class="intro-rule wrap"><span>YOUR VISION, THOUGHTFULLY CRAFTED</span><span>RAJOURI GARDEN · NEW DELHI</span></div>
     <section class="studio-section" id="studio" aria-labelledby="studio-title">
       <div class="wrap">
-        <div class="section-heading"><div><p class="eyebrow">LET’S CREATE SOMETHING YOURS</p><h2 id="studio-title">It starts with <em>your idea.</em></h2></div><p>Choose what speaks to you.<br>We’ll help you with the finer details.</p></div>
+        <div class="section-heading"><div><p class="eyebrow">LET’S CREATE SOMETHING YOURS</p><h2 id="studio-title">Create <em>your jewellery.</em></h2></div><p>Share your preferences, then discuss your idea with us on WhatsApp.</p></div>
         <div class="studio-layout">
           <div class="builder">
             <nav class="steps" aria-label="Enquiry progress">
-              <button type="button" class="step active" data-step="1" aria-current="step"><span class="step-num">01</span><span>The piece</span></button>
+              <button type="button" class="step active" data-step="1" aria-current="step"><span class="step-num">01</span><span>Your jewellery</span></button>
               <span class="step-line" aria-hidden="true"></span>
-              <button type="button" class="step" data-step="2"><span class="step-num">02</span><span>The details</span></button>
+              <button type="button" class="step" data-step="2"><span class="step-num">02</span><span>Preferences</span></button>
               <span class="step-line" aria-hidden="true"></span>
-              <button type="button" class="step" data-step="3"><span class="step-num">03</span><span>Your enquiry</span></button>
+              <button type="button" class="step" data-step="3"><span class="step-num">03</span><span>Contact &amp; review</span></button>
             </nav>
             <noscript><p style="padding:24px">Please enable JavaScript to use the enquiry studio, or <a href="tel:+919818208000">call +91 98182 08000</a> for personal assistance.</p></noscript>
             <form id="enquiry-form" novalidate>
               <div id="form-error" class="form-error" role="alert" hidden></div>
               <div class="stage" id="stage-1" data-stage="1">
-                <fieldset class="choice-group" id="type-group"><legend>What do you have in mind? <span class="required-note">Choose one</span></legend><p class="field-help">A little inspiration. A place to begin.</p><div class="piece-grid" id="type-options"></div></fieldset>
+                <fieldset class="choice-group" id="type-group"><legend>What do you have in mind? <span class="required-note">Choose one</span></legend><p class="field-help">Start with the piece you would like us to create.</p><div class="piece-grid" id="type-options"></div></fieldset>
+                <div id="piece-preferences" hidden>
                 <fieldset class="choice-group" id="metal-group"><legend>Your preferred metal <span class="required-note">Choose one</span></legend><div class="metal-grid" id="metal-options"></div></fieldset>
                 <fieldset class="choice-group purity-group" id="purity-group" hidden><legend>Gold purity <span class="optional">Optional</span></legend><div class="pills" id="purity-options"></div><p class="field-help">We can guide you on the best purity for your design.</p></fieldset>
-                <fieldset class="choice-group" id="diamond-group"><legend>A touch of brilliance <span class="required-note">Choose one</span></legend><div class="stone-grid" id="diamond-options"></div><p class="field-help">Not certain? Choose “Guide me” and we’ll explore the options together.</p></fieldset>
-                <div class="stage-actions"><span class="subtle">Next, the personal touches.</span><button class="primary" type="button" id="to-details">The details <span aria-hidden="true">→</span></button></div>
+                <fieldset class="choice-group" id="diamond-group"><legend>Diamond preference <span class="required-note">Choose one</span></legend><div class="stone-grid" id="diamond-options"></div><p class="field-help">Not certain? Choose “Help me choose” and we’ll explore the options together.</p></fieldset>
+                </div>
+                <div class="stage-actions"><span class="subtle">Step 1 of 3</span><button class="primary" type="button" id="to-details">Next: preferences <span aria-hidden="true">→</span></button></div>
               </div>
               <div class="stage" id="stage-2" data-stage="2" hidden>
-                <fieldset class="choice-group" id="occasion-group"><legend>What’s the occasion? <span class="required-note">Choose one</span></legend><p class="field-help">Everyday moments deserve something beautiful, too.</p><div class="pills occasion-pills" id="occasion-options"></div></fieldset>
-                <div class="field-row">
-                  <div class="field"><label for="customer-name">Your name <span class="required-star">*</span></label><input id="customer-name" name="customerName" autocomplete="name" maxlength="80" placeholder="How may we address you?" required></div>
-                  <div class="field"><label for="customer-mobile">Mobile number <span class="required-star">*</span></label><input id="customer-mobile" name="customerMobile" type="tel" autocomplete="tel" inputmode="tel" maxlength="24" placeholder="+91 98123 45678" required aria-describedby="mobile-help"><span class="field-help" id="mobile-help">Include your country code if outside India.</span></div>
-                </div>
-                <div class="field-row">
-                  <div class="field"><label for="customer-email">Email address <span class="optional">Optional</span></label><input id="customer-email" name="customerEmail" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com"></div>
-                  <div class="field"><label for="budget">Approximate budget <span class="optional">Optional</span></label><select id="budget" name="budget"><option value="">Let’s discuss</option><option>Under ₹50,000</option><option>₹50,000–₹1 lakh</option><option>₹1–2 lakh</option><option>₹2–5 lakh</option><option>₹5–10 lakh</option><option>Above ₹10 lakh</option></select></div>
-                </div>
+                <fieldset class="choice-group" id="occasion-group"><legend>What’s the occasion? <span class="required-note">Choose one</span></legend><p class="field-help">Choose the closest option, or select “Not decided yet”.</p><div class="pills occasion-pills" id="occasion-options"></div></fieldset>
+                <div class="field"><label for="budget">Approximate budget <span class="optional">Optional</span></label><select id="budget" name="budget"><option value="">Let’s discuss</option><option>Under ₹50,000</option><option>₹50,000–₹1 lakh</option><option>₹1–2 lakh</option><option>₹2–5 lakh</option><option>₹5–10 lakh</option><option>Above ₹10 lakh</option></select></div>
+                <details class="optional-details"><summary>Add more details <span>Optional — date, inspiration or design notes</span></summary><div class="optional-details-body">
                 <div class="field-row">
                   <div class="field"><label for="needed-by">Preferred date <span class="optional">Optional</span></label><input id="needed-by" name="neededBy" type="date"><span class="field-help">Our team will confirm the time your piece needs.</span></div>
                   <div class="field"><label for="inspiration">Inspiration link <span class="optional">Optional</span></label><input id="inspiration" name="inspiration" type="url" placeholder="https://…" maxlength="500"><span class="field-help">You can also share photos directly in WhatsApp.</span></div>
                 </div>
                 <div class="field"><label for="notes">Make it personal <span class="optional">Optional</span></label><textarea id="notes" name="notes" rows="5" maxlength="1000" placeholder="A design you love, preferred diamond shape, ring size, an engraving, or an heirloom you’d like to reimagine…"></textarea><div class="textarea-meta"><span>Tell us what would make this piece yours.</span><span id="notes-count">0 / 1000</span></div></div>
+                </div></details>
                 <div class="studio-note"><span aria-hidden="true">✧</span><p>Your preferences are a starting point. We’ll discuss the design, availability and quotation personally with you.</p></div>
-                <div class="stage-actions"><button class="back" type="button" data-back="1">← Back</button><button class="primary" type="button" id="to-review">Review my enquiry <span aria-hidden="true">→</span></button></div>
+                <div class="stage-actions"><button class="back" type="button" data-back="1">← Back</button><button class="primary" type="button" id="to-review">Next: contact &amp; review <span aria-hidden="true">→</span></button></div>
               </div>
               <div class="stage" id="stage-3" data-stage="3" hidden>
-                <div class="review-title"><span class="review-mark" aria-hidden="true">✧</span><p class="eyebrow">A BEAUTIFUL BEGINNING</p><h3>Your idea, <em>ready to share.</em></h3><p>Take a moment to review. We look forward to making it personal.</p></div>
+                <div class="review-title"><span class="review-mark" aria-hidden="true">✧</span><p class="eyebrow">STEP 3 OF 3</p><h3>Let’s <em>connect.</em></h3><p>Add your contact details, check your selections, then save your enquiry.</p></div>
+                <div class="field-row">
+                  <div class="field"><label for="customer-name">Your name <span class="required-star">*</span></label><input id="customer-name" name="customerName" autocomplete="name" maxlength="80" placeholder="How may we address you?" required></div>
+                  <div class="field"><label for="customer-mobile">Mobile number <span class="required-star">*</span></label><input id="customer-mobile" name="customerMobile" type="tel" autocomplete="tel" inputmode="tel" maxlength="24" placeholder="+91 98123 45678" required aria-describedby="mobile-help"><span class="field-help" id="mobile-help">Include your country code if outside India.</span></div>
+                </div>
+                <div class="field"><label for="customer-email">Email address <span class="optional">Optional</span></label><input id="customer-email" name="customerEmail" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com"></div>
+                <details class="message-details"><summary>Preview your WhatsApp message</summary>
                 <div class="message-heading"><label for="message-preview">Your WhatsApp message</label><button type="button" class="text-link" id="edit-details">Edit details ↗</button></div>
                 <textarea id="message-preview" rows="13" readonly aria-describedby="message-help" spellcheck="false"></textarea>
                 <p class="field-help" id="message-help">Your selections are included exactly as shown. Edit your details to make a change.</p>
+                </details>
                 <div class="contact-consent"><input id="contact-consent" name="consent" type="checkbox" value="yes" aria-describedby="privacy-note"><label for="contact-consent">I agree to Nu Punjab Jewellery House saving my contact details and jewellery preferences, and contacting me about this enquiry.</label></div>
                 <p class="field-help" id="privacy-note">Saved only when you select the button below. Our team uses these details to respond to your enquiry. To request correction or deletion, call <a href="tel:+919818208000">+91 98182 08000</a>. Opening WhatsApp shares your draft with WhatsApp; tap Send there to message us.</p>
                 <div class="enquiry-trap" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
-                <button type="button" id="save-enquiry" class="primary save-enquiry">Save enquiry &amp; prepare WhatsApp <span aria-hidden="true">→</span></button>
+                <button type="button" id="save-enquiry" class="primary save-enquiry">Save enquiry &amp; continue <span aria-hidden="true">→</span></button>
                 <p id="save-status" class="save-status" role="status" aria-live="polite"></p>
-                <div class="whatsapp-actions" id="whatsapp-actions" hidden><a id="whatsapp-link" class="primary whatsapp" target="_blank" rel="noopener noreferrer" href="#">Open WhatsApp draft <span aria-hidden="true">↗</span></a><button type="button" class="secondary" id="copy-message">Copy message <span aria-hidden="true">⧉</span></button></div>
+                <div class="whatsapp-actions" id="whatsapp-actions" hidden><a id="whatsapp-link" class="primary whatsapp" target="_blank" rel="noopener noreferrer" href="#">Continue to WhatsApp <span aria-hidden="true">↗</span></a><button type="button" class="secondary" id="copy-message">Copy message <span aria-hidden="true">⧉</span></button></div>
                 <p class="send-note">Saving records your enquiry with us. No WhatsApp message is sent automatically.</p>
                 <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
                 <div class="review-footer"><span>TO NU PUNJAB JEWELLERY HOUSE<br><strong>+91 98182 08000</strong></span><button type="button" class="back" data-back="2">← Back to details</button></div>
               </div>
             </form>
           </div>
-          <aside class="summary" aria-labelledby="summary-title">
+          <details class="summary" open><summary class="selection-toggle">Your selections <span>Show / hide</span></summary><div class="selection-content">
             <div class="summary-top"><span class="eyebrow">YOUR PERSONAL SELECTION</span><span class="sparkle" aria-hidden="true">✧</span></div>
             <div id="summary-icon" class="summary-icon" aria-hidden="true"></div>
-            <h3 id="summary-title">A piece of <em>your story.</em></h3><p class="summary-description" id="summary-description">Your choices, beautifully brought together.</p>
-            <dl class="summary-list"><div><dt>The piece</dt><dd id="summary-type">Yet to be imagined</dd></div><div><dt>Metal</dt><dd id="summary-metal">Your choice</dd></div><div><dt>Diamonds</dt><dd id="summary-diamond">Your choice</dd></div><div><dt>Occasion</dt><dd id="summary-occasion">Your moment</dd></div><div id="summary-budget-row" hidden><dt>Budget</dt><dd id="summary-budget"></dd></div><div id="summary-date-row" hidden><dt>Preferred date</dt><dd id="summary-date"></dd></div></dl>
+            <h3 id="summary-title">Your <em>selections.</em></h3><p class="summary-description" id="summary-description">Your choices, beautifully brought together.</p>
+            <dl class="summary-list"><div><dt>The piece</dt><dd id="summary-type">Choose a piece</dd></div><div><dt>Metal</dt><dd id="summary-metal">Your choice</dd></div><div><dt>Diamonds</dt><dd id="summary-diamond">Your choice</dd></div><div><dt>Occasion</dt><dd id="summary-occasion">Not selected yet</dd></div><div id="summary-budget-row" hidden><dt>Budget</dt><dd id="summary-budget"></dd></div><div id="summary-date-row" hidden><dt>Preferred date</dt><dd id="summary-date"></dd></div></dl>
             <div id="summary-notes-wrap" class="summary-notes" hidden><span>THE PERSONAL TOUCH</span><p id="summary-notes"></p></div>
             <div class="summary-bottom"><span class="tiny-diamond" aria-hidden="true">◇</span><p>Thoughtful design.<br>Personal attention, always.</p></div>
-          </aside>
+          </div></details>
         </div>
       </div>
     </section>

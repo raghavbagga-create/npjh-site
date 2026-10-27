@@ -32,7 +32,7 @@ export function mountEnquiryStudio(root, prefix = '') {
     metal:[['Yellow gold','yellow'],['White gold','white'],['Rose gold','rose'],['Platinum','platinum'],['Please guide me','unsure']],
     purity:['14kt','18kt','22kt','Please guide me'],
     diamond:[['Natural diamonds','Classic, enduring brilliance'],['Lab-grown diamonds','A considered diamond choice'],['No diamonds','Let the metal do the talking'],['Please guide me','Explore the possibilities']],
-    occasion:['Wedding / Bridal','Engagement','Anniversary','A gift','Everyday wear','Another occasion']
+    occasion:['Not decided yet','Wedding / Bridal','Engagement','Anniversary','A gift','Everyday wear','Another occasion']
   };
   function radio(name,value,index,labelHtml,labelClass,required=false) {
     const inputId=`${prefix}${name}-${index}`;
@@ -45,17 +45,17 @@ export function mountEnquiryStudio(root, prefix = '') {
   }
   for (const id of ['type-options','metal-options','purity-options','diamond-options','occasion-options']) $(id).replaceChildren();
   options.type.forEach((v,i)=>$('type-options').append(radio('type',v,i,icons[v]+`<span>${v}</span>`,'piece-card',true)));
-  options.metal.forEach(([v,swatch],i)=>$('metal-options').append(radio('metal',v,i,`<span class="metal-swatch ${swatch}" aria-hidden="true"></span><span>${v==='Please guide me'?'Guide me':v}</span>`,'metal-card',true)));
-  options.purity.forEach((v,i)=>$('purity-options').append(radio('purity',v,i,v==='Please guide me'?'Guide me':v,'pill')));
-  options.diamond.forEach(([v,help],i)=>$('diamond-options').append(radio('diamond',v,i,`<strong>${v==='Please guide me'?'Guide me':v}</strong><small>${help}</small>`,'stone-card',true)));
+  options.metal.forEach(([v,swatch],i)=>$('metal-options').append(radio('metal',v,i,`<span class="metal-swatch ${swatch}" aria-hidden="true"></span><span>${v==='Please guide me'?'Help me choose':v}</span>`,'metal-card',true)));
+  options.purity.forEach((v,i)=>$('purity-options').append(radio('purity',v,i,v==='Please guide me'?'Help me choose':v,'pill')));
+  options.diamond.forEach(([v,help],i)=>$('diamond-options').append(radio('diamond',v,i,`<strong>${v==='Please guide me'?'Help me choose':v}</strong><small>${help}</small>`,'stone-card',true)));
   options.occasion.forEach((v,i)=>$('occasion-options').append(radio('occasion',v,i,v,'pill',true)));
   function value(name){return (new FormData(form).get(name)||'').toString().trim();}
   function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
   function formatDate(raw){return new Intl.DateTimeFormat('en-IN',{day:'numeric',month:'long',year:'numeric'}).format(new Date(`${raw}T12:00:00`));}
   function metalDescription(){const metal=value('metal');const purity=value('purity');return metal+(metal.toLowerCase().includes('gold')&&purity?` · ${purity==='Please guide me'?'purity to discuss':purity}`:'');}
   function getMessage(){
-    const lines=[`Hello Nu Punjab Jewellery House,`,``, `My name is ${value('customerName')}. I would like to discuss a jewellery enquiry.`,``, `Jewellery: ${value('type')}`,`Metal: ${metalDescription()}`,`Diamond preference: ${value('diamond')}`,`Occasion: ${value('occasion')}`];
-    lines.push(`Mobile: ${value('customerMobile')}`);
+    const lines=[`Hello Nu Punjab Jewellery House,`,``, `${value('customerName')?'My name is '+value('customerName')+'. ':''}I would like to discuss a jewellery enquiry.`,``, `Jewellery: ${value('type')}`,`Metal: ${metalDescription()}`,`Diamond preference: ${value('diamond')}`,`Occasion: ${value('occasion')}`];
+    if(value('customerMobile'))lines.push(`Mobile: ${value('customerMobile')}`);
     if(value('customerEmail'))lines.push(`Email: ${value('customerEmail')}`);
     if(savedReference)lines.push(`Enquiry reference: ${savedReference}`);
     if(value('budget'))lines.push(`Approximate budget: ${value('budget')}`);
@@ -67,15 +67,16 @@ export function mountEnquiryStudio(root, prefix = '') {
   }
   function updateSummary(){
     const type=value('type'),metal=value('metal');
+    $('piece-preferences').hidden=!type;
     const isGold=metal.toLowerCase().includes('gold');
     $('purity-group').hidden=!isGold;
     $('purity-group').disabled=!isGold;
-    $('summary-type').textContent=type||'Yet to be imagined';
-    $('summary-metal').textContent=metal?metalDescription():'Your choice';
-    $('summary-diamond').textContent=value('diamond')||'Your choice';
-    $('summary-occasion').textContent=value('occasion')||'Your moment';
+    $('summary-type').textContent=type||'Choose a piece';
+    $('summary-metal').textContent=metal?metalDescription():'Not selected yet';
+    $('summary-diamond').textContent=value('diamond')||'Not selected yet';
+    $('summary-occasion').textContent=value('occasion')||'Not selected yet';
     $('summary-icon').innerHTML=icons[type]||icons.default;
-    $('summary-description').textContent=typeDescriptions[type]||'Your choices, beautifully brought together.';
+    $('summary-description').textContent='Check your preferences here as you go.';
     $('summary-budget-row').hidden=!value('budget');
     $('summary-budget').textContent=value('budget');
     $('summary-date-row').hidden=!value('neededBy');
@@ -91,7 +92,7 @@ export function mountEnquiryStudio(root, prefix = '') {
   }
   function showError(message,control){
     $('form-error').textContent=message;$('form-error').hidden=false;
-    if(control){control.setAttribute('aria-invalid','true');control.focus({preventScroll:true});}
+    if(control){const disclosure=control.closest('details');if(disclosure)disclosure.open=true;control.setAttribute('aria-invalid','true');control.focus({preventScroll:true});}
     $('form-error').scrollIntoView({block:'center',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
     return false;
   }
@@ -105,19 +106,23 @@ export function mountEnquiryStudio(root, prefix = '') {
   }
   function validatePiece(){
     for(const [name,label] of [['type','jewellery type'],['metal','preferred metal'],['diamond','diamond preference']]){
-      if(!value(name)){if(activeStage!==1)displayStage(1,false);return showError(`Please choose your ${label}.${name==='type'?'':' “Guide me” is available if you’re unsure.'}`,form.querySelector(`input[name="${name}"]`));}
+      if(!value(name)){if(activeStage!==1)displayStage(1,false);return showError(`Please choose your ${label}.${name==='type'?'':' “Help me choose” is available if you’re unsure.'}`,form.querySelector(`input[name="${name}"]`));}
     }return true;
   }
   function validateDetails(){
     if(!value('occasion'))return showError('Please choose an occasion for your piece.',form.querySelector('input[name="occasion"]'));
-    if(!value('customerName'))return showError('Please enter your name so we can make the conversation personal.',$('customer-name'));
-    const mobile=value('customerMobile');
-    if(!/^\+?[\d\s().-]+$/.test(mobile)||!/^\+?\d{8,15}$/.test(mobile.replace(/[\s().-]/g,'')))return showError('Please enter a mobile number with 8 to 15 digits.',$('customer-mobile'));
-    if(value('customerEmail')&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value('customerEmail')))return showError('Please enter a valid email address, or leave it empty.',$('customer-email'));
     const date=value('neededBy');
     if(date&&(!/^\d{4}-\d{2}-\d{2}$/.test(date)||date<today()))return showError('Please choose today or a future date.',$('needed-by'));
     const inspiration=value('inspiration');
     if(inspiration){try{const link=new URL(inspiration);if(!['https:','http:'].includes(link.protocol)||!link.hostname.includes('.'))throw new Error('invalid');}catch{return showError('Please enter a complete inspiration link beginning with https:// or http://.',$('inspiration'));}}
+    return true;
+  }
+  function validateContact(){
+    if(!value('customerName'))return showError('Please enter your name so we can make the conversation personal.',$('customer-name'));
+    const mobile=value('customerMobile');
+    if(!/^\+?[\d\s().-]+$/.test(mobile)||!/^\+?\d{8,15}$/.test(mobile.replace(/[\s().-]/g,'')))return showError('Please enter a mobile number with 8 to 15 digits.',$('customer-mobile'));
+    if(value('customerEmail')&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value('customerEmail')))return showError('Please enter a valid email address, or leave it empty.',$('customer-email'));
+
     return true;
   }
   function goTo(stage){
@@ -132,7 +137,7 @@ export function mountEnquiryStudio(root, prefix = '') {
     clearError();
     if(!['consent','website'].includes(event.target.name)){
       submissionId=newSubmissionId();savedReference='';saveStatus.textContent='';saveStatus.removeAttribute('data-state');
-      saveButton.disabled=false;saveButton.textContent='Save enquiry & prepare WhatsApp →';$('whatsapp-actions').hidden=true;
+      saveButton.disabled=false;saveButton.textContent='Save enquiry & continue →';$('whatsapp-actions').hidden=true;
     }
     updateSummary();
   }
@@ -148,6 +153,7 @@ export function mountEnquiryStudio(root, prefix = '') {
     clearError();
     if(!validatePiece())return;
     if(!validateDetails()){displayStage(2,false);return;}
+    if(!validateContact())return;
     if(!$('contact-consent').checked)return showError('Please agree to saving your details before submitting this enquiry.',$('contact-consent'));
     const payload={submissionId,consent:true,consentVersion:'enquiry-contact-2026-10-21',website:value('website')};
     for(const name of ['customerName','customerMobile','customerEmail','type','metal','purity','diamond','occasion','budget','neededBy','inspiration','notes'])payload[name]=value(name);
@@ -175,9 +181,10 @@ export function mountEnquiryStudio(root, prefix = '') {
   on($('whatsapp-link'),'click',()=>{$('copy-status').textContent='Your draft will open in WhatsApp. Tap Send there when you’re ready.';});
   on($('reset-enquiry'),'click',()=>{if(!saving)$('reset-dialog').showModal();});
   on($('cancel-reset'),'click',()=>$('reset-dialog').close());
-  on($('confirm-reset'),'click',()=>{form.reset();submissionId=newSubmissionId();savedReference='';saveStatus.textContent='';saveStatus.removeAttribute('data-state');saveButton.disabled=false;saveButton.textContent='Save enquiry & prepare WhatsApp →';$('whatsapp-actions').hidden=true;clearError();$('message-preview').value='';$('whatsapp-link').href='#';$('reset-dialog').close();displayStage(1);});
+  on($('confirm-reset'),'click',()=>{form.reset();submissionId=newSubmissionId();savedReference='';saveStatus.textContent='';saveStatus.removeAttribute('data-state');saveButton.disabled=false;saveButton.textContent='Save enquiry & continue →';$('whatsapp-actions').hidden=true;clearError();$('message-preview').value='';$('whatsapp-link').href='#';$('reset-dialog').close();displayStage(1);});
   $('needed-by').min=today();
   if ($('year')) $('year').textContent=new Date().getFullYear();
+  if(window.matchMedia('(max-width: 800px)').matches)root.querySelector('.summary').open=false;
   displayStage(1,false);
   return () => { lifecycle.abort(); if ($('reset-dialog').open) $('reset-dialog').close(); };
 }

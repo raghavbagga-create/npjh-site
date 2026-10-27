@@ -18,7 +18,7 @@ export default function GoldRateTicker(){
  },[]);
  const date=rates?.sourceDate?new Date(rates.sourceDate+"T00:00:00Z").toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"}):null;
  return <div id="gold-ticker" className="gold-ticker" aria-label="Indicative gold and silver rates per gram" aria-live="polite">
-  <div className="ticker-heading"><strong>GOLD RATES</strong>{date&&<span>As of {date}</span>}</div>
-  {rates?<div className="ticker-rates"><span>24K <b>{formatRate(rates.gold24)}</b></span><span>22K <b>{formatRate(rates.gold22)}</b></span>{rates.silver!==null&&<span>Silver <b>{formatRate(rates.silver)}</b></span>}</div>:<span className="ticker-fallback">{loading?"Loading latest rates…":<>Rates temporarily unavailable. <a href="tel:+919818208000">Call for the latest rates</a></>}</span>}
+  <div className="ticker-heading"><strong>GOLD &amp; SILVER RATES</strong><span className="ticker-unit">Indicative prices · per gram</span>{date&&<span>As of {date}</span>}</div>
+  {rates?<div className="ticker-rates"><span><small>24K GOLD</small><b>{formatRate(rates.gold24)}</b></span><span><small>22K GOLD</small><b>{formatRate(rates.gold22)}</b></span>{rates.silver!==null&&<span><small>SILVER</small><b>{formatRate(rates.silver)}</b></span>}</div>:<span className="ticker-fallback">{loading?"Loading latest rates…":<>Rates temporarily unavailable. <a href="tel:+919818208000">Call for the latest rates</a></>}</span>}
  </div>;
 }
