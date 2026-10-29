@@ -1,6 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {createEnquiryHandler,CONSENT_VERSION} from '../source/functions/enquiry-handler.mjs';
+import {buildSavePayload} from '../source/enquiry-studio/model.mjs';
 const fixture={submissionId:'f3e1f1b7-e409-478d-98d5-07fb25d79941',customerName:'Studio QA',customerMobile:'+1 (202) 555-0123',customerEmail:'test@example.com',type:'Ring',metal:'Rose gold',purity:'18kt',diamond:'Natural diamonds',occasion:'Anniversary',budget:'₹1–2 lakh',neededBy:'',inspiration:'https://example.com/design',notes:'Test engraving',consent:true,consentVersion:CONSENT_VERSION,website:''};
 function request(data=fixture, overrides={}){return new Request('https://nupunjabjewelleryhouse.com/api/enquiries',{method:'POST',headers:{origin:'https://nupunjabjewelleryhouse.com','content-type':'application/json',...overrides.headers},body:JSON.stringify(data)});}
 function memory(){const records=new Map();return {records,setJSON:async(key,value)=>{if(!records.has(key))records.set(key,value);},get:async(key)=>records.get(key)||null};}
@@ -9,3 +10,12 @@ test('rejects missing consent, invalid contact, invalid selections and dates bef
 test('optional email may be empty and irrelevant purity is removed',async()=>{const store=memory();assert.equal((await createEnquiryHandler(()=>store)(request({...fixture,customerEmail:'',metal:'Platinum'}))).status,201);assert.equal([...store.records.values()][0].purity,'');});
 test('no public read route, cross-origin and oversized requests rejected',async()=>{const handle=createEnquiryHandler(()=>{throw new Error('Must not access storage');});assert.equal((await handle(new Request('https://nupunjabjewelleryhouse.com/api/enquiries'))).status,405);assert.equal((await handle(request(fixture,{headers:{origin:'https://example.com'}}))).status,403);assert.equal((await handle(request({...fixture,notes:'x'.repeat(13000)}))).status,413);const malformed=new Request('https://nupunjabjewelleryhouse.com/api/enquiries',{method:'POST',headers:{origin:'https://nupunjabjewelleryhouse.com','content-type':'application/json'},body:'{'});assert.equal((await handle(malformed)).status,400);});
 test('storage failure or failed persistence confirmation never claims success',async()=>{for(const store of [{setJSON:async()=>{throw new Error('private implementation info');}},{setJSON:async()=>{},get:async()=>null}]){const response=await createEnquiryHandler(()=>store)(request());assert.equal(response.status,503);const body=await response.text();assert.equal(body.includes('saved":true'),false);assert.equal(body.includes('private implementation info'),false);assert.equal(body.includes(fixture.customerName),false);}});
+test('approved four-step studio selections save through the existing contact-storage contract',async()=>{
+ const draft={type:'Help me choose',metal:'Help me choose',purity:'',diamonds:'Help me choose',occasion:'',notes:'Oval centre, engraved A & R',budget:'₹1–3 lakh',inspiration:'',customerName:'Studio QA',phone:'98765 43210',email:''};
+ for(const patch of [{},{type:'Ring',metal:'Rose gold',purity:'14K',diamonds:'Lab-grown diamonds',occasion:'Wedding / bridal'},{occasion:'Birthday',budget:'₹3–5 lakh'},{occasion:'Festive celebration',budget:'₹5 lakh and above'},{occasion:'Gifting'}]){
+  const store=memory(),payload=buildSavePayload({...draft,...patch},fixture.submissionId);
+  const result=await createEnquiryHandler(()=>store)(request(payload));assert.equal(result.status,201,JSON.stringify(patch));
+  const record=[...store.records.values()][0];assert.equal(record.customerMobile,'+919876543210');assert.equal(record.customerName,draft.customerName);assert.equal(record.notes,draft.notes);assert.equal(record.consent.version,CONSENT_VERSION);
+  if(patch.purity)assert.equal(record.purity,'14kt');
+ }
+});

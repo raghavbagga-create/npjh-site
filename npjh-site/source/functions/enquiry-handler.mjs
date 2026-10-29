@@ -3,12 +3,12 @@ import {createHash} from 'node:crypto';
 export const CONSENT_VERSION = 'enquiry-contact-2026-10-21';
 const origins = new Set(['https://nupunjabjewelleryhouse.com', 'https://www.nupunjabjewelleryhouse.com', 'https://lovely-duckanoo-1ed5e7.netlify.app']);
 const choices = {
-  type: ['Ring', 'Earrings', 'Necklace', 'Bracelet', 'Bangles', 'Pendant'],
+  type: ['Ring', 'Earrings', 'Necklace', 'Bracelet', 'Bangles', 'Pendant', 'Help me choose'],
   metal: ['Yellow gold', 'White gold', 'Rose gold', 'Platinum', 'Please guide me'],
   purity: ['', '14kt', '18kt', '22kt', 'Please guide me'],
   diamond: ['Natural diamonds', 'Lab-grown diamonds', 'No diamonds', 'Please guide me'],
-  occasion: ['Not decided yet', 'Wedding / Bridal', 'Engagement', 'Anniversary', 'A gift', 'Everyday wear', 'Another occasion'],
-  budget: ['', 'Under ₹50,000', '₹50,000–₹1 lakh', '₹1–2 lakh', '₹2–5 lakh', '₹5–10 lakh', 'Above ₹10 lakh']
+  occasion: ['Not decided yet', 'Wedding / Bridal', 'Engagement', 'Anniversary', 'A gift', 'Everyday wear', 'Another occasion', 'Birthday', 'Festive celebration'],
+  budget: ['', 'Under ₹50,000', '₹50,000–₹1 lakh', '₹1–2 lakh', '₹2–5 lakh', '₹5–10 lakh', 'Above ₹10 lakh', '₹1–3 lakh', '₹3–5 lakh', '₹5 lakh and above']
 };
 class InvalidEnquiry extends Error {}
 function invalid(message) { throw new InvalidEnquiry(message); }

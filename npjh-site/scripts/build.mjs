@@ -13,7 +13,7 @@ await mkdir('.build',{recursive:true});await mkdir('dist/assets',{recursive:true
 for(const name of ['hero-necklace.jpeg','gold-heirlooms.jpeg','diamond-earring.png','gold-jewellery.png','logo-mark.png','favicon.png'])await copyFile('images/'+name,'dist/images/'+name);
 for(const name of ['robots.txt','sitemap.xml'])await copyFile(name,'dist/'+name);
 await mkdir('dist/enquiry-studio',{recursive:true});
-for(const name of ['index.html','styles.css','app.js','controller.js','integrations.js'])await copyFile('source/enquiry-studio/'+name,'dist/enquiry-studio/'+name);
+for(const name of ['index.html','styles.css','app.js','controller.js','integrations.js','model.mjs'])await copyFile('source/enquiry-studio/'+name,'dist/enquiry-studio/'+name);
 const studioCss=await buildStudio();
 const css=await postcss([tailwindcss({base:resolve('source')})]).process(await readFile('source/app/globals.css','utf8'),{from:resolve('source/app/globals.css'),map:false});
 const combinedCss=css.css+studioCss;

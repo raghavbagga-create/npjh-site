@@ -1,6 +1,6 @@
 # Saved enquiry records
 
-The homepage enquiry studio and `/enquiry-studio/` save an enquiry only after the customer reviews it, checks the consent box and selects **Save enquiry & prepare WhatsApp**. Name and mobile are required; email is optional. WhatsApp remains a separate, deliberate action.
+The homepage enquiry studio and `/enquiry-studio/` save an enquiry only after the customer reviews it, checks the consent box and selects **Save enquiry & prepare WhatsApp**. The four-step flow separates the piece, preferences, contact details and review. Name and mobile are required; email is optional. “Help me choose” and an undecided occasion are supported. WhatsApp remains a separate, deliberate action.
 
 ## Owner access
 
